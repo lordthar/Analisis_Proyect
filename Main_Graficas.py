@@ -6,7 +6,7 @@ import time
 import csv
 
 #---------------------------- LEYENDO Y VERIFICANDO ---------------------------------------
-risACsv("referencias.csv", "ScienceDirect_citations_1742352403897.ris", "ScienceDirect_citations_1742352418457.ris")
+risACsv("referencias.csv", "articulos_unicos.ris")
 
 time.sleep(10)
 
@@ -14,7 +14,7 @@ with open("referencias.csv", "r", encoding="utf-8") as file:
     reader = csv.DictReader(file)
     data = list(reader) 
 
-key = "primary_title"  
+key = "authors"  
 
 if not data:
     print(" El archivo CSV está vacío o no tiene datos válidos.")
@@ -24,8 +24,8 @@ else:
     total = len(data)  
     print(f" Ordenando más de {total} registros por '{key}'...")
 #--------------------------------LLAMANDO FUNCION ------------------------------------------
-medir_tiempos_ordenamiento(data, key)
+# medir_tiempos_ordenamiento(data, key)
 
 # medir_tiempos_ordenamiento_year(data, key)
 
-# medir_tiempos_ordenamiento_autores(data, key)
+medir_tiempos_ordenamiento_autores(data, key)

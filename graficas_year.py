@@ -447,7 +447,7 @@ def medir_tiempos_ordenamiento_year(data, key):
     print(f"CombSort: {tiempo_combsort:.5f} segundos")
     print(f"Selection: {tiempo_selection:.5f} segundos")
     print(f"TreeSort: {tiempo_tree:.5f} segundos")
-    print(f"TreeSort: {tiempo_pigenonhole:.5f} segundos")
+    print(f"Pigenonhole: {tiempo_pigenonhole:.5f} segundos")
     print(f"BucketSort: {tiempo_bucket:.5f} segundos")
     print(f"QuickSort: {tiempo_quickSort:.5f} segundos")
     print(f"heapsort: {tiempo_heapsort:.5f} segundos")

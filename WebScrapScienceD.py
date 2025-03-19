@@ -129,8 +129,9 @@ class ScraperSD:
         )
         onehundred_button.click()
         time.sleep(2)
-
-        while True:
+        pagina_actual = 1
+        numero_pagina = 25
+        while pagina_actual <= numero_pagina:
             time.sleep(5)
             try:
                 checkbox = WebDriverWait(self.driver, 500).until(
@@ -156,7 +157,6 @@ class ScraperSD:
                 while not self.is_download_complete(self.download_path):
                     print("Esperando a que la descarga termine...")
 
-                self.process_ris_file() 
                 time.sleep(4)
 
                 self.driver.execute_script(""" 
@@ -179,8 +179,12 @@ class ScraperSD:
                     )
                     print("Página siguiente cargada.")
                     time.sleep(5)
+               
              
             except Exception as e:
                 print("Error al cargar la siguiente página o no hay más páginas.")
                 self.driver.quit()
                 break
+            pagina_actual +=1
+        
+        self.process_ris_file() 

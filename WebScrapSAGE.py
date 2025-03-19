@@ -101,14 +101,14 @@ class ScraperSage:
                     continue
 
             if unique_articles:
-                with open(self.unique_file_path, 'w', encoding="utf-8") as unique_file:
+                with open(self.unique_file_path, 'a', encoding="utf-8") as unique_file:
                     rispy.dump(list(unique_articles.values()), unique_file)  
                 print("Artículos únicos añadidos al archivo.")
             else:
                 print("No se encontraron artículos únicos.")
             
             if duplicate_articles:
-                with open(self.duplicate_file_path, 'w', encoding="utf-8") as duplicate_file:
+                with open(self.duplicate_file_path, 'a', encoding="utf-8") as duplicate_file:
                     rispy.dump(list(duplicate_articles.values()), duplicate_file)  
                 print("Artículos repetidos añadidos al archivo.")
             else:
@@ -156,7 +156,9 @@ class ScraperSage:
         sage_box.send_keys("computational thinking")
         sage_box.send_keys(Keys.ENTER)
 
-        while True:
+        pagina_actual = 1
+        numero_pagina = 10
+        while pagina_actual <= numero_pagina:
             checkbox = WebDriverWait(self.driver, 70).until(
                 EC.presence_of_element_located((By.ID, "action-bar-select-all"))
             )
@@ -183,7 +185,7 @@ class ScraperSage:
 
             while not self.is_download_complete(self.download_path):
                     print("Esperando a que la descarga termine...")
-                    self.process_ris_file()
+                    
             time.sleep(2)
            
             time.sleep(1)
@@ -210,4 +212,6 @@ class ScraperSage:
             except Exception as e:
                 print("Error al intentar ir a la siguiente página:", e)
                 break
+            pagina_actual +=1
             
+        self.process_ris_file()

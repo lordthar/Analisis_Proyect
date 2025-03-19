@@ -134,8 +134,10 @@ class ScraperIEEE:
             EC.element_to_be_clickable((By.XPATH, "//button[@class='dropdown-item filter-popover-option' and contains(text(), '100')]"))
         )
         ActionChains(self.driver).move_to_element(items_per_page_100).click().perform()
+        pagina_actual= 1
+        num_paginas = 4
 
-        while True:
+        while pagina_actual <= num_paginas:
             label_checkbox = WebDriverWait(self.driver, 20).until(
                 EC.element_to_be_clickable((By.CLASS_NAME, "results-actions-selectall"))
             )
@@ -167,7 +169,6 @@ class ScraperIEEE:
             download_button.click()
             while not self.is_download_complete(self.download_path):
                     print("Esperando a que la descarga termine...")
-            self.process_ris_file()
             time.sleep(5)
             close_button = WebDriverWait(self.driver, 20).until(
                 EC.element_to_be_clickable((By.XPATH, "//div[contains(@class, 'cursor-pointer') and contains(@class, 'd-flex')]//i[contains(@class, 'fa-times')]"))
@@ -179,6 +180,9 @@ class ScraperIEEE:
             )
             next_button.click()
             time.sleep(5)
+            pagina_actual += 1
+
+        self.process_ris_file()
             
         
 

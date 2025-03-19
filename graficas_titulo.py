@@ -187,14 +187,17 @@ def medir_tiempos_ordenamiento(data, key):
     #heap_sort
 
     def heap_sort(arr, key):
-        # Convertimos la lista en una lista de tuplas (clave de orden, objeto completo)
-        heap = [(str(x[key]).lower(), x) for x in arr]
-        heapq.heapify(heap)  # Convertimos en heap
+        try:
+            # Convertimos la lista en una lista de tuplas (clave de orden, objeto completo)
+            heap = [(str(x.get(key, "")).lower(), x) for x in arr]
+            heapq.heapify(heap)  # Convertimos en heap
 
-        # Extraemos los elementos ordenados
-        sorted_arr = [heapq.heappop(heap)[1] for _ in range(len(heap))]
-        return sorted_arr
-
+            # Extraemos los elementos ordenados
+            sorted_arr = [heapq.heappop(heap)[1] for _ in range(len(heap))]
+            return sorted_arr
+        except Exception as e:
+            print(f"Error en heap_sort: {e}")
+        return []
     #----------------------------------------------------------------------------------------
     #bitonic
     def bitonic_sort(arr, key):

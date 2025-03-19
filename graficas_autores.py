@@ -453,7 +453,7 @@ def medir_tiempos_ordenamiento_autores(data, key):
 
     plt.bar(metodos, tiempos, color=["#e85069", "#79e850", "#9a50e8", "#e850c1", "#e6e850", "#e8a850", "#50e8c3", "#5087e8", "#50d8e8", "#e85050", "#e8a850"])
     plt.ylabel("Tiempo (segundos)")
-    plt.title("Tiempo de Ordenamiento por titulo")
+    plt.title("Tiempo de Ordenamiento por autor")
     plt.xticks(metodos,  rotation=45, ha="right")
     plt.gcf().subplots_adjust(bottom=0.2) 
     plt.show()

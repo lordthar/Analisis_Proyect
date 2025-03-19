@@ -20,7 +20,7 @@ def main():
         with open(duplicate_file_path, 'w', encoding='utf-8') as duplicate_file:
             duplicate_file.write('')
 
-    scraper = ScraperIEEE(unique_file_path , duplicate_file_path)
+    scraper = ScraperSage(unique_file_path , duplicate_file_path)
     scraper.run()
 if __name__ == "__main__":
     main()
