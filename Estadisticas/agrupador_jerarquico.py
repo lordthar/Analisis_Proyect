@@ -48,8 +48,8 @@ class AgrupadorJerarquico:
         self.abstracts = df['abstract'].tolist()
         self.categorias = df['keywords'].tolist()
         self.abstracts = [self.limpiar_texto(abs) for abs in self.abstracts]
-        self.abstracts = self.abstracts[:50]
-        self.categorias = self.categorias[:50]
+        self.abstracts = self.abstracts[:20]
+        self.categorias = self.categorias[:20]
         self.etiquetas = [' '.join(abs.split()[:3]) for abs in self.abstracts]
     
         categoria_unica = list(set(self.categorias))
