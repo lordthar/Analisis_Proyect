@@ -4,6 +4,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import re
 import nltk
+import os
 from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
@@ -11,7 +12,7 @@ from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import linkage, dendrogram, cophenet
 from scipy.spatial.distance import pdist
 
-nltk.download('stopwords')
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), "nltk_data"))
 
 class AgrupadorJerarquico:
     def __init__(self, ruta_csv):
