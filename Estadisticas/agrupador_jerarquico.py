@@ -3,17 +3,32 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import re
-import nltk
-import os
-from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score
 from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import linkage, dendrogram, cophenet
 from scipy.spatial.distance import pdist
 
-ruta = os.path.abspath('nltk_data')
-nltk.data.path.append(ruta)
+english_stopwords = {
+    "a", "about", "above", "after", "again", "against", "ain", "all", "am", "an", "and", "any",
+    "are", "aren", "aren't", "as", "at", "be", "because", "been", "before", "being", "below",
+    "between", "both", "but", "by", "can", "couldn", "couldn't", "d", "did", "didn", "didn't",
+    "do", "does", "doesn", "doesn't", "doing", "don", "don't", "down", "during", "each", "few",
+    "for", "from", "further", "had", "hadn", "hadn't", "has", "hasn", "hasn't", "have", "haven",
+    "haven't", "having", "he", "he'd", "he'll", "her", "here", "hers", "herself", "he's", "him",
+    "himself", "his", "how", "i", "i'd", "if", "i'll", "i'm", "in", "into", "is", "isn", "isn't",
+    "it", "it'd", "it'll", "it's", "its", "itself", "i've", "just", "ll", "m", "ma", "me", "mightn",
+    "mightn't", "more", "most", "mustn", "mustn't", "my", "myself", "needn", "needn't", "no", "nor",
+    "not", "now", "o", "of", "off", "on", "once", "only", "or", "other", "our", "ours", "ourselves",
+    "out", "over", "own", "re", "s", "same", "shan", "shan't", "she", "she'd", "she'll", "she's",
+    "should", "shouldn", "shouldn't", "should've", "so", "some", "such", "t", "than", "that", "that'll",
+    "the", "their", "theirs", "them", "themselves", "then", "there", "these", "they", "they'd",
+    "they'll", "they're", "they've", "this", "those", "through", "to", "too", "under", "until",
+    "up", "ve", "very", "was", "wasn", "wasn't", "we", "we'd", "we'll", "we're", "were", "weren",
+    "weren't", "we've", "what", "when", "where", "which", "while", "who", "whom", "why", "will",
+    "with", "won", "won't", "wouldn", "wouldn't", "y", "you", "you'd", "you'll", "your", "you're",
+    "yours", "yourself", "yourselves", "you've"
+}
 
 class AgrupadorJerarquico:
     def __init__(self, ruta_csv):
@@ -43,7 +58,7 @@ class AgrupadorJerarquico:
         texto = texto.lower()
         texto = re.sub(r'[^\w\s]', '', texto)
         palabras = texto.split()
-        palabras_limpias = [palabra for palabra in palabras if palabra not in stopwords.words('english')]
+        palabras_limpias = [palabra for palabra in palabras if palabra not in english_stopwords]
         return ' '.join(palabras_limpias)
 
     def vectorizar_textos(self):
