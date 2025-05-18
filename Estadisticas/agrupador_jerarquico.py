@@ -12,7 +12,8 @@ from sklearn.cluster import AgglomerativeClustering
 from scipy.cluster.hierarchy import linkage, dendrogram, cophenet
 from scipy.spatial.distance import pdist
 
-nltk.data.path.append(os.path.join(os.path.dirname(__file__), "nltk_data"))
+ruta = os.path.abspath('nltk_data')
+nltk.data.path.append(ruta)
 
 class AgrupadorJerarquico:
     def __init__(self, ruta_csv):
