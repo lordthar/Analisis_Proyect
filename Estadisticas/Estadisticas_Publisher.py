@@ -1,5 +1,10 @@
 from collections import Counter
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'DejaVu Sans'
+
 
 def estadisticas_publisher(data, key):
 
@@ -17,11 +22,12 @@ def estadisticas_publisher(data, key):
     cantidades = [int(cantidad) for _, cantidad in conteo]
 
     # Mostrar gráfico de barras
-    plt.figure(figsize=(10, 6))
-    plt.bar(nombres, cantidades)
-    plt.title("Top 15 Editoriales (Publishers)")
-    plt.xlabel("Editorial")
-    plt.ylabel("Cantidad de productos")
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
+    ax.bar(nombres, cantidades)
+    ax.set_title("Top 15 Editoriales (Publishers)")
+    ax.set_xlabel("Editorial")
+    ax.set_ylabel("Cantidad de productos")
     plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    plt.show()
+    
+
+    return fig 

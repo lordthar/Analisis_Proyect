@@ -1,5 +1,6 @@
 import pandas as pd
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import re
 import nltk
@@ -30,16 +31,17 @@ class AgrupadorJerarquico:
         self.abstracts = self.abstracts[:50]
         self.categorias = self.categorias[:50]
         self.etiquetas = [' '.join(abs.split()[:3]) for abs in self.abstracts]
-
+    
         categoria_unica = list(set(self.categorias))
         self.labels_reales = [categoria_unica.index(cat) for cat in self.categorias]
         print(f"[INFO] {len(self.abstracts)} abstracts y categorías cargadas y limpiadas.")
+        return self.abstracts, self.categorias
 
     def limpiar_texto(self, texto):
         texto = texto.lower()
         texto = re.sub(r'[^\w\s]', '', texto)
         palabras = texto.split()
-        palabras_limpias = [palabra for palabra in palabras if palabra not in stopwords.words('spanish')]
+        palabras_limpias = [palabra for palabra in palabras if palabra not in stopwords.words('english')]
         return ' '.join(palabras_limpias)
 
     def vectorizar_textos(self):
@@ -56,35 +58,41 @@ class AgrupadorJerarquico:
     def comparar_metodos(self):
         metodos = ['ward', 'average']
         resultados = {}
+        imagenes_base64 = {}
 
         for metodo in metodos:
             print(f"\n[INFO] Aplicando clustering con método: {metodo}")
             linkage_matrix = self.aplicar_clustering(metodo)
-            self.graficar_dendrograma(linkage_matrix, metodo)
+            imagen_base64 = self.graficar_dendrograma(linkage_matrix, metodo)
+            imagenes_base64[metodo] = imagen_base64
+
             c = self.evaluar_calidad(linkage_matrix)
             print(f"[RESULTADO] Coeficiente cophenético para '{metodo}': {c:.4f}")
             resultados[metodo] = c
 
-            self.evaluar_agrupamientos_con_categorias(metodo)
+            self.evaluar_agrupamientos_categorias(metodo)
 
         mejor = max(resultados, key=resultados.get)
         print(f"\nEl método con mejor coeficiente cophenético es: '{mejor}' con {resultados[mejor]:.4f}")
 
+        return imagenes_base64
+
     def graficar_dendrograma(self, linkage_matrix, titulo):
-        plt.figure(figsize=(10, 7))
+        fig = plt.figure(figsize=(10, 7))
         dendrogram(linkage_matrix, labels=self.etiquetas)
         plt.title(f'Dendrograma - Método {titulo}')
-        plt.xlabel('Documentos')
+        plt.xlabel('Abstracts')
         plt.ylabel('Distancia')
         plt.xticks(rotation=90)
         plt.tight_layout()
-        plt.show()
+        return fig 
+
 
     def evaluar_calidad(self, linkage_matrix):
         c, _ = cophenet(linkage_matrix, pdist(self.X))
         return c
 
-    def evaluar_agrupamientos_con_categorias(self, metodo):
+    def evaluar_agrupamientos_categorias(self, metodo):
         clustering = AgglomerativeClustering(n_clusters=len(set(self.labels_reales)), linkage=metodo)
         labels_pred = clustering.fit_predict(self.X)
 

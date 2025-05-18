@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Análisis Bibliométrico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #4895ef;
+            --secondary-color: #5888e0;
+            --accent-color: #e7cfda;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #ff9e00;
+            --info-color: #4361ee;
+            --text-color: #2b2d42;
+            --border-radius: 10px;
+            --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fd;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="none"/><path d="M0 0h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 25h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 50h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 75h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6z" fill="rgba(255,255,255,0.07)"/></svg>');
+            opacity: 0.6;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 2rem;
+            max-width: 800px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.25rem 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-header i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .card-header h3 {
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            padding: 1.75rem;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .card-footer {
+            background-color: #f8fafc;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid #eef2f7;
+        }
+
+        .feature-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 500;
+            color: white;
+            background-color: var(--primary-color);
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            padding: 0.7rem 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            border-radius: 50px;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(88, 108, 199, 0.25);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-info {
+            background-color: var(--info-color);
+        }
+
+        .btn-info:hover {
+            background-color: #16a085;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+        .btn-danger {
+            background-color: var(--accent-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+          #dashboard {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        #dashboard-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        #dashboard-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .chart-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 991px) {
+            .chart-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #dashboard {
+                padding: 1.5rem;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .chart-container {
+                height: 200px;
+            }
+            
+            #dashboard {
+                padding: 1rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .sidebar-item.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 0.5rem;
+        }
+
+        .main-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .tab {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            text-align: center;
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .data-table-container {
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .search-bar {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f0f5ff;
+        }
+
+
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.75em;
+            font-weight: 600;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 10rem;
+            color: white;
+        }
+
+        .badge-primary {
+            background-color: var(--primary-color);
+        }
+
+        .badge-info {
+            background-color: var(--info-color);
+        }
+
+        .badge-warning {
+            background-color: var(--warning-color);
+        }
+
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                height: 200px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="none"/><path d="M0 0h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 25h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 50h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zM0 75h6v6H0zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6zm25 0h6v6h-6z" fill="rgba(255,255,255,0.07)"/></svg>');
+            opacity: 0.6;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .scrollTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .scrollTop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scrollTop
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .styled-table th, .styled-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .styled-table th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>RIS - VIEWER</h1>
+            <p class="subtitle">Análisis bibliometrico y estadistico de articulos</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Requerimientos Del Proyecto Final</h2>
+        <p>Este visualizador permite analizar estadísticas obtenidas de archivos RIS extraídos mediante técnicas de web scraping con selenium a la bases de datos de la Universidad del quindio (Science Direct, IEEE y SAGE). Seleccione alguna de las funcionalidades para explorar los datos.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <img src="{{ url_for('static', filename='Img/requerimiento2.png') }}" alt="Análisis estadistico de datos" class="feature-image">
+                <div class="card-header">
+                    <h3>Análisis estadistico por frecuencia de variables</h3>
+                </div>
+                <div class="card-body">
+                    <p>Visualice estadísticas sobre los autores, journals, fechas y producciones mas frecuentes a partir de los datos extraídos.</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn" onclick="mostrarEstadisticas('estadistico')">Ver estadísticas</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="{{ url_for('static', filename='Img/requerimiento3.png') }}" alt="Nube de palabras y grafico Co-words" class="feature-image">
+                <div class="card-header">
+                    <h3>Análisis grafico por nube de palabras y grafo co-words</h3>
+                </div>
+                <div class="card-body">
+                    <p>Demostración de nube de palabras y el grafico - words realizado con los abstracts extraidos de los articulos</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn" onclick="mostrarEstadisticas('co-words')">Ver estadísticas</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <img src="{{ url_for('static', filename='Img/requerimiento5.png') }}" alt="Clustering y vectorización de datos" class="feature-image">
+                <div class="card-header">
+                    <h3>Clustering y vectorización de datos</h3>
+                </div>
+                <div class="card-body">
+                    <p>Graficación de dendograma para determinar las distancias y similitudes entre abstracs basandose en metodos como ward o average</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn" onclick="mostrarEstadisticas('dendrograma')">Ver estadísticas</button>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div id="dashboard" style="display: none;">
+            <h2 id="dashboard-title">Dashboard de Estadísticas</h2>
+            <div class="dashboard">
+                
+                <div class="main-content">
+                    <div class="tabs">
+                        <div class="tab active" onclick="cambiarTab('resumen')">Contextualización</div>
+                        <div class="tab" onclick="cambiarTab('graficos')">Graficos y Estadisticas</div>
+                        <div id="tab-categoria" class="tab estadistica-content" onclick="cambiarTab('tabla')">Frecuencia de aparición Categorias</div>
+                    </div>
+                    
+                    <div id="tab-resumen" class="tab-content active">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">{{total.estadistico}}</div>
+                                <div class="stat-label">Total de Artículos</div>
+                            </div>
+
+                            <div id="total-nube" class="stats-grid estadistica-content">
+                                <div class="stat-item">
+                                    <div class="stat-number">500</div>
+                                    <div class="stat-label">Total de Artículos Utilizados</div>
+                                </div>
+                            </div>
+
+                            <div id="dendrograma-total" class="stats-grid estadistica-content">
+                                <div class="stat-item">
+                                    <div class="stat-number">{{total["dendrograma-abstract"]}}</div>
+                                    <div class="stat-label">Total de Artículos Utilizados</div>
+                                </div>
+                            </div>
+
+                            <div id="dendrograma-tcategoria" class="stats-grid estadistica-content">
+                                <div class="stat-item">
+                                    <div class="stat-number">{{total["dendrograma-categoria"]}}</div>
+                                    <div class="stat-label">Total de Categorias (Keywords) Análizados</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        
+                        
+                        <div id="estadistica-contexto" class="estadistica-content" style="display: none;">
+                            <h3>Puntos Destacados</h3>
+                            <ul>
+                                <li>El análisis estadistico de los articulos, nos da la oportunidad de realizar graficos con la frecuencia de aparición de determinadas variables solicitadas en el requerimiento 2 </li>
+                                <li>Las variables analizadas son Autores, Años de publicación, journlas, productos y publishers</li>
+                            </ul>
+                        </div>
+                        <div id="nube-contexto" class="estadistica-content" style="display: none;">
+                            <h3>Puntos Destacados</h3>
+                            <ul>
+                                <li>El análisis Bibliométrico de los articulos, nos brinda la oportunidad de realizar graficos de nubes de palabras, para saber la cantidad de las mismas que aparecen en los asbtracs y de igual forma para el grafico de co-words cumpliendo asi con el requerimiento 3</li>
+                                <li>Se subdivinen en categorias para agrupar los datos de forma mas organizada y agil</li>
+                                <li>En el grafico de nube de palabras entre mas grande sea la palabra de la categoria mas veces a aparecido</li>
+                                <li> En el grafico de co-words entre una arista sea mas oscura significa que tiene mas unión con las categorias</li>
+                            </ul>
+                        </div>
+                        <div id="dendrograma-contexto" class="estadistica-content" style="display: none;">
+                            <h3>Puntos Destacados</h3>
+                            <ul>
+                                <li>El análisis Bibliométrico de los articulos, Nos da la oportunidad de ver y analizar dos tipos de métodos de clustering y averiguar que us la vectorización de los datos, dando com oresultado la graficación de un dendrograma cumpliendo con el requerimiento 5 </li>
+                                <li>Los abstracts se analizan, se limpian de "stop-words" para ser vectorizados, posteriormente se realiza la clusterización con los metodos y se grafican</li>
+                                <li>De igual forma aparte de los abstracts tambien se tienen categorias que sirven para compararlas con la similitud de las generadas y las reales que existen en los abstract</li>
+                                <li> los archivos .ris al no tener un campo de identificación para las categorias se toman las keywords</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div id="tab-graficos" class="tab-content">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="chart-container">
+
+                                <div style="height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
+                                    <div id="nube-abstract" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento3.wordcloud }}" alt="Nube de palabras" style="max-width: 100%;">
+                                    </div>
+                                    <div id="dendrograma-ward" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento5['dendrograma-ward'] }}" alt="Dendrograma Ward"  style="max-width: 100%;">
+                                    </div>
+                                     <div id="autores-abstract" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento2.autores }}" alt="Nube de palabras" style="max-width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="chart-container">
+                                <div style="height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
+                                    <div id="dendrograma-average" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento5['dendrograma-average'] }}" alt="Dendrograma Average"  style="max-width: 100%;">
+                                    </div>
+                                    <div id="cowords-abstract" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento3.coword }}" alt="Co-words" style="max-width: 100%;">
+                                    </div>
+                                     <div id="aniotipo-abstract" class="estadistica-content" style="display: none;">
+                                        <img src="{{ requerimiento2.aniotipo }}" alt="anioTipo" style="max-width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="estadistica-producto" class="estadistica-content chart-container" style="display: none;">
+                                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
+                                        <div id="producto-abstract" class="estadistica-content" style="display: none;">
+                                            <img src="{{ requerimiento2.producto }}" alt="Nube de palabras" style="max-width: 100%;">
+                                        </div>
+                                    </div>
+                            </div>
+
+                            <div id="estadisticas-abstract" class="estadistica-content" style="display: none; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;" >
+                                <div class="chart-container">
+                                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
+                                        <div id="journal-abstract" class="estadistica-content" style="display: none;">
+                                            <img src="{{ requerimiento2.journals }}" alt="Nube de palabras" style="max-width: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 8px;">
+                                        <div id="publisher-abstract" class="estadistica-content" style="display: none;">
+                                            <img src="{{ requerimiento2.publisher}}" alt="Nube de palabras" style="max-width: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-tabla" class=" tab-content">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Categoría</th>
+                                    <th>Frecuencia Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fila in tabla_categoria %}
+                                <tr>
+                                    <td>{{ fila[0] }}</td>
+                                    <td>{{ fila[1] }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 RISViewer - Visualizador de Estadísticas para archivos RIS</p>
+        </div>
+    </footer>
+
+    <script>
+        function mostrarEstadisticas(categoria) {
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+
+        const titulos = {
+            'estadistico': 'Dashboard de Estadísticas - Análisis gráfico y estadístico de frecuencias',
+            'co-words': 'Dashboard de Estadísticas - Nube de Palabras y Gráfico co-words',
+            'dendrograma': 'Dashboard de Estadísticas - Dendrograma "Ward y Average"' 
+        };
+
+        document.getElementById('dashboard-title').textContent = titulos[categoria];
+
+        document.querySelectorAll('.estadistica-content').forEach(div => {
+            div.style.display = 'none';
+        });
+
+        if (categoria === 'co-words') {
+            document.getElementById('nube-abstract').style.display = 'block';
+            document.getElementById('cowords-abstract').style.display = 'block';
+            document.getElementById('nube-contexto').style.display = 'block';
+            document.getElementById('total-nube').style.display = 'block';
+            document.getElementById('tab-categoria').style.display = 'block';
+        } else if (categoria === 'dendrograma') {
+            document.getElementById('dendrograma-ward').style.display = 'block';
+            document.getElementById('dendrograma-average').style.display = 'block';
+            document.getElementById('dendrograma-contexto').style.display = 'block';
+            document.getElementById('dendrograma-total').style.display = 'block';
+            document.getElementById('dendrograma-tcategoria').style.display = 'block';
+        } else if(categoria == 'estadistico'){
+            document.getElementById('autores-abstract').style.display = 'block';
+            document.getElementById('aniotipo-abstract').style.display = 'block';
+            document.getElementById('producto-abstract').style.display = 'block';
+            document.getElementById('journal-abstract').style.display = 'block';
+            document.getElementById('publisher-abstract').style.display = 'block';
+            document.getElementById('estadisticas-abstract').style.display = 'block';
+            document.getElementById('estadistica-producto').style.display = 'block';
+            document.getElementById('estadistica-contexto').style.display = 'block';
+        }
+    }
+
+
+        
+        function cambiarTab(tab) {
+           
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+         
+            event.target.classList.add('active');
+            
+           
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>

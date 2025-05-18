@@ -1,0 +1,155 @@
+categoría,variable
+Habilidades,abstraction
+Habilidades,algorithm
+Habilidades,algorithmic thinking
+Habilidades,coding
+Habilidades,collaboration
+Habilidades,cooperation
+Habilidades,creativity
+Habilidades,critical thinking
+Habilidades,debug
+Habilidades,decomposition
+Habilidades,evaluation
+Habilidades,generalization
+Habilidades,logic
+Habilidades,logical thinking
+Habilidades,modularity
+Habilidades,patterns recognition
+Habilidades,problem solving
+Habilidades,programming
+Conceptos Computacionales,conditionals
+Conceptos Computacionales,control structures
+Conceptos Computacionales,directions
+Conceptos Computacionales,events
+Conceptos Computacionales,functions
+Conceptos Computacionales,loops
+Conceptos Computacionales,modular structure
+Conceptos Computacionales,parallelism
+Conceptos Computacionales,sequences
+Conceptos Computacionales,software
+Conceptos Computacionales,hardware
+Conceptos Computacionales,variables
+Actitudes,emotional
+Actitudes,engagement
+Actitudes,motivation
+Actitudes,perceptions
+Actitudes,persistence
+Actitudes,self-efficacy
+Actitudes,self-perceived
+Propiedades Psicométricas,classical test theory
+Propiedades Psicométricas,ctt
+Propiedades Psicométricas,confirmatory factor analysis
+Propiedades Psicométricas,cfa
+Propiedades Psicométricas,exploratory factor analysis
+Propiedades Psicométricas,efa
+Propiedades Psicométricas,item response theory
+Propiedades Psicométricas,irt
+Propiedades Psicométricas,reliability
+Propiedades Psicométricas,structural equation model
+Propiedades Psicométricas,sem
+Propiedades Psicométricas,validity
+Herramienta de Evaluación,beginners computational thinking test
+Herramienta de Evaluación,bctt
+Herramienta de Evaluación,coding attitudes survey
+Herramienta de Evaluación,escas
+Herramienta de Evaluación,collaborative computing observation instrument
+Herramienta de Evaluación,competent computational thinking test
+Herramienta de Evaluación,cctt
+Herramienta de Evaluación,computational thinking skills test
+Herramienta de Evaluación,ctst
+Herramienta de Evaluación,computational concepts
+Herramienta de Evaluación,computational thinking assessment for chinese elementary students
+Herramienta de Evaluación,cta-ces
+Herramienta de Evaluación,computational thinking challenge
+Herramienta de Evaluación,ctc
+Herramienta de Evaluación,computational thinking levels scale
+Herramienta de Evaluación,ctls
+Herramienta de Evaluación,computational thinking scale
+Herramienta de Evaluación,cts
+Herramienta de Evaluación,computational thinking skill levels scale
+Herramienta de Evaluación,computational thinking test
+Herramienta de Evaluación,ctt
+Herramienta de Evaluación,computational thinking test for elementary school students
+Herramienta de Evaluación,computational thinking test for lower primary
+Herramienta de Evaluación,cttlp
+Herramienta de Evaluación,computational thinking-skill tasks on numbers and arithmetic
+Herramienta de Evaluación,computerized adaptive programming concepts test
+Herramienta de Evaluación,capct
+Herramienta de Evaluación,ct scale
+Herramienta de Evaluación,elementary student coding attitudes survey
+Herramienta de Evaluación,general self-efficacy scale
+Herramienta de Evaluación,ict competency test
+Herramienta de Evaluación,instrument of computational identity
+Herramienta de Evaluación,kbit fluid intelligence subtest
+Herramienta de Evaluación,mastery of computational concepts test
+Herramienta de Evaluación,algorithmic test
+Herramienta de Evaluación,multidimensional 21st century skills scale
+Herramienta de Evaluación,self-efficacy scale
+Herramienta de Evaluación,stem learning attitude scale
+Herramienta de Evaluación,the computational thinking scale
+Diseño de Investigación,no experimental
+Diseño de Investigación,experimental
+Diseño de Investigación,longitudinal research
+Diseño de Investigación,mixed methods
+Diseño de Investigación,post-test
+Diseño de Investigación,pre-test
+Diseño de Investigación,quasi-experiments
+Nivel de Escolaridad,upper elementary education
+Nivel de Escolaridad,upper elementary school
+Nivel de Escolaridad,primary school
+Nivel de Escolaridad,primary education
+Nivel de Escolaridad,elementary school
+Nivel de Escolaridad,early childhood education
+Nivel de Escolaridad,kindergarten
+Nivel de Escolaridad,preschool
+Nivel de Escolaridad,secondary school
+Nivel de Escolaridad,secondary education
+Nivel de Escolaridad,high school
+Nivel de Escolaridad,higher education
+Nivel de Escolaridad,university
+Nivel de Escolaridad,college
+Medio,block programming
+Medio,mobile application
+Medio,pair programming
+Medio,plugged activities
+Medio,programming
+Medio,robotics
+Medio,spreadsheet
+Medio,stem
+Medio,unplugged activities
+Estrategia,construct-by-self mind mapping
+Estrategia,construct-on-scaffold mind mapping
+Estrategia,design-based learning
+Estrategia,evidence-centred design approach
+Estrategia,gamification
+Estrategia,reverse engineering pedagogy
+Estrategia,technology-enhanced learning
+Estrategia,collaborative learning
+Estrategia,cooperative learning
+Estrategia,flipped classroom
+Estrategia,game-based learning
+Estrategia,inquiry-based learning
+Estrategia,personalized learning
+Estrategia,problem-based learning
+Estrategia,project-based learning
+Estrategia,universal design for learning
+Herramienta,alice
+Herramienta,arduino
+Herramienta,scratch
+Herramienta,scratchjr
+Herramienta,blockly games
+Herramienta,code.org
+Herramienta,codecombat
+Herramienta,csunplugged
+Herramienta,robot turtles
+Herramienta,hello ruby
+Herramienta,kodable
+Herramienta,lightbotjr
+Herramienta,kibo robots
+Herramienta,bee bot
+Herramienta,cubetto
+Herramienta,minecraft
+Herramienta,agent sheets
+Herramienta,mimo
+Herramienta,py– learn
+Herramienta,spacechem

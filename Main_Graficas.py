@@ -11,6 +11,7 @@ from  Estadisticas.Estadisticas_AnioTipo import estadisticas_aniotipo
 from  Estadisticas.Estadisticas_Producto import estadisticas_producto
 from  Estadisticas.Estadisticas_journals import estadisticas_journals
 from  Estadisticas.Estadisticas_Publisher import estadisticas_publisher
+from Estadisticas.word_cloud import WordCloud_Generator
 from convertidor_ris_csv import risACsv
 import time
 import csv
@@ -22,7 +23,7 @@ computational_thinking_terms = [
     "Robotic", "Loops", "Scratch"
 ]
 
-risACsv("referencias.csv", "Proyecto_Analisis\\Articulos\\articulos_unicos.ris")
+risACsv("referencias.csv", "/Articulos/articulos_unicos.ris")
 
 time.sleep(10)
 
@@ -48,15 +49,23 @@ else:
 
 # medir_tiempos_ordenamiento_abstract(data, computational_thinking_terms)
 
+#-------------------------------- Generación de WordCloud ---------------------------------------
+
+words=WordCloud_Generator('referencias.csv', 'categorias_variables.csv')
+words.cargar_datos()
+words.generar_nube_words()
+words.generar_grafo_coword()
+words.contar_y_mostrar_tabla_ocurrencias()
+
+
+
 # --------------------------------- AGRUPAMIENTO JERÁRQUICO ----------------------------------
-print("\n[INFO] Iniciando Agrupamiento Jerárquico...")
+# print("\n[INFO] Iniciando Agrupamiento Jerárquico...")
 
-agrupador = AgrupadorJerarquico('referencias.csv') 
-agrupador.cargar_datos()
-agrupador.vectorizar_textos()
-
-# Usar método que ya compara y grafica
-agrupador.comparar_metodos()
+# agrupador = AgrupadorJerarquico('referencias.csv') 
+# agrupador.cargar_datos()
+# agrupador.vectorizar_textos()
+# agrupador.comparar_metodos()
 
 #-----------------------------------------------------------------------------------------------------------------
 #estadisticas_autores(data, key)

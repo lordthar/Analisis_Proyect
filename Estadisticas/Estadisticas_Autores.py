@@ -1,5 +1,9 @@
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import Counter
+
+plt.rcParams['font.family'] = 'DejaVu Sans'
 
 def estadisticas_autores(data, key):
 
@@ -29,11 +33,11 @@ def estadisticas_autores(data, key):
     valores = [cantidad for _, cantidad in conteo]
 
     # Graficar
-    plt.figure(figsize=(10, 6))
-    plt.bar(nombres, valores)
-    plt.title('Top 15 primeros autores por cantidad de productos')
-    plt.xlabel('Primer autor')
-    plt.ylabel('Cantidad de productos')
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
+    ax.bar(nombres, valores)
+    ax.set_title('Top 15 primeros autores por cantidad de productos')
+    ax.set_xlabel('Primer autor')
+    ax.set_ylabel('Cantidad de productos')
     plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    plt.show()
+
+    return fig

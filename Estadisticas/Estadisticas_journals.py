@@ -1,5 +1,9 @@
 from collections import Counter
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+plt.rcParams['font.family'] = 'DejaVu Sans'
 
 def estadisticas_journals(data, key):
 
@@ -24,11 +28,12 @@ def estadisticas_journals(data, key):
     cantidades = [cantidad for _, cantidad in conteo]
 
     # Gráfico de barras
-    plt.figure(figsize=(10, 6))
-    plt.bar(nombres_abreviados, cantidades)
-    plt.title(f'Top 15 más frecuentes en: {key}')
-    plt.xlabel(key.capitalize())
-    plt.ylabel('Cantidad de productos')
+    fig, ax = plt.subplots(figsize=(10, 6), constrained_layout=True)
+    ax.bar(nombres_abreviados, cantidades)
+    ax.set_title(f'Top 15 más frecuentes en: {key}')
+    ax.set_xlabel(key.capitalize())
+    ax.set_ylabel('Cantidad de productos')
     plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    plt.show()
+    
+
+    return fig
