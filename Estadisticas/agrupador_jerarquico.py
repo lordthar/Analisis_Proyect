@@ -1,6 +1,9 @@
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
+matplotlib.rcParams['font.family'] = 'DejaVu Sans'
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 import matplotlib.pyplot as plt
 import re
 from sklearn.feature_extraction.text import TfidfVectorizer
